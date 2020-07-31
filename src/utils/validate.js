@@ -1,8 +1,8 @@
 /*
  * @Author: 刘家辰
  * @Date: 2020-06-11 11:46:00
- * @LastEditTime: 2020-06-15 11:01:26
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-07-31 12:54:10
+ * @LastEditors: wei.chen
  * @Description:
  */
 
@@ -16,15 +16,6 @@
  */
 export function isExternal(path) {
 	return /^(https?:|mailto:|tel:)/.test(path)
-}
-
-/**
- * @param {string} str
- * @returns {Boolean}
- */
-export function validUsername(str) {
-	const valid_map = ['admin', 'editor']
-	return valid_map.indexOf(str.trim()) >= 0
 }
 
 /**

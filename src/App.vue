@@ -2,8 +2,8 @@
  * @Author: wei.chen
  * @Date: 2020-06-20 18:55:32
  * @LastEditors: wei.chen
- * @LastEditTime: 2020-06-23 17:18:20
- * @Descripttion: 
+ * @LastEditTime: 2020-07-31 12:53:03
+ * @Descripttion: vue 入口文件,全局的代码可以放在这里
 -->
 <template>
 	<div id="app">

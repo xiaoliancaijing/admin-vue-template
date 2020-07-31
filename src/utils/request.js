@@ -1,8 +1,8 @@
 /*
  * @Author: 刘家辰
  * @Date: 2020-06-11 11:46:00
- * @LastEditTime: 2020-06-28 12:13:54
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-07-31 14:41:06
+ * @LastEditors: wei.chen
  * @Description:
  */
 
@@ -63,15 +63,11 @@ service.interceptors.response.use(
 			// 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
 			if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
 				// to re-login
-				MessageBox.confirm(
-					'You have been logged out, you can cancel to stay on this page, or log in again',
-					'Confirm logout',
-					{
-						confirmButtonText: 'Re-Login',
-						cancelButtonText: 'Cancel',
-						type: 'warning',
-					}
-				).then(() => {
+				MessageBox.confirm('登录状态失效，请重新登录', '确认退出', {
+					confirmButtonText: '重新登录',
+					cancelButtonText: 'Cancel',
+					type: 'warning',
+				}).then(() => {
 					store.dispatch('user/resetToken').then(() => {
 						location.reload()
 					})
@@ -83,11 +79,10 @@ service.interceptors.response.use(
 		}
 	},
 	error => {
-		console.log('err' + error) // for debug
 		Message({
 			message: '服务开了小差，请稍后重试',
 			type: 'error',
-			duration: 4 * 1000,
+			duration: 3 * 1000,
 		})
 		return Promise.reject(error)
 	}
