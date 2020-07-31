@@ -1,0 +1,110 @@
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './element-ui.scss';
+@import './sidebar.scss';
+
+body {
+	height: 100%;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial,
+		sans-serif;
+}
+
+label {
+	// font-weight: 700;
+}
+
+html {
+	height: 100%;
+	box-sizing: border-box;
+}
+
+#app {
+	height: 100%;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+	outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+	cursor: pointer;
+	color: inherit;
+	text-decoration: none;
+}
+
+div:focus {
+	outline: none;
+}
+
+.clearfix {
+	&:after {
+		visibility: hidden;
+		display: block;
+		font-size: 0;
+		content: ' ';
+		clear: both;
+		height: 0;
+	}
+}
+
+// main-container global css
+.app-container {
+	padding: 20px;
+}
+.el-submenu__title i {
+	font-weight: bold !important;
+	font-size: 14px !important;
+}
+.el-form-item {
+	// width: 400px;
+}
+.el-input__inner {
+	// width: auto;
+}
+.el-textarea__inner {
+	width: auto;
+}
+.el-textarea .el-textarea__inner {
+	width: 100%;
+}
+.el-button--primary {
+	background-color: #1890ff;
+	border-color: #1890ff;
+}
+.dialogStyle {
+	min-width: 700px;
+}
+.activityDetail .el-card__body {
+	height: 200px;
+	box-sizing: content-box;
+}
+.flex-row .el-form-item__label,
+.userLimitAmount .el-form-item__label {
+	text-align: left;
+}
+.refundSause_dynamic .el-form-item__error {
+	right: 0;
+}
+.newUploadForm .el-form-item__content {
+	display: flex;
+	align-items: center;
+}
+.el-checkbox__input.is-checked + .el-checkbox__label {
+	color: unset;
+}
+.el-tooltip__popper {
+	max-width: 500px;
+}
