@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { getToken } from '@/utils/auth'
+import { getPageTitle } from '@/utils/getPageTitle'
 
 Vue.use(Router)
 
@@ -61,280 +63,7 @@ export const constantRoutes = [
 			},
 		],
 	},
-	// 商品管理
-	{
-		path: '/goodsManage',
-		component: Layout,
-		redirect: 'noRedirect',
-		meta: {
-			title: '商品管理',
-			icon: 'nested',
-		},
-		children: [
-			{
-				path: 'goodsList',
-				component: () => import('@/views/goodsManage/goodsList/index'),
-				meta: { title: '商品列表', icon: 'form' },
-			},
-			{
-				path: 'goodsList/goodsForm',
-				hidden: true,
-				component: () => import('@/views/goodsManage/goodsList/goodsForm/index'),
-				meta: { title: '添加商品' },
-			},
-			{
-				path: 'goodsList/goodsDetail',
-				hidden: true,
-				component: () => import('@/views/goodsManage/goodsList/goodsDetail/index'),
-				meta: { title: '商品详情' },
-			},
 
-			{
-				path: 'brandManage',
-				component: () => import('@/views/goodsManage/brandManage/index'),
-				meta: { title: '品牌管理', icon: 'brand' },
-			},
-			{
-				path: 'supplierManage',
-				component: () => import('@/views/goodsManage/supplierManage/index'),
-				meta: { title: '供应商管理', icon: 'supperlier' },
-			},
-			{
-				path: 'catManage',
-				component: () => import('@/views/goodsManage/catManage/index'),
-				meta: { title: '类目管理', icon: 'cat' },
-			},
-			{
-				path: 'catManage/attributeList',
-				hidden: true,
-				component: () => import('@/views/goodsManage/catManage/attributeList/index'),
-				meta: { title: 'SKU列表', activeMenu: '/goodsManage/catManage' },
-			},
-			{
-				path: 'catManage/parameterList',
-				hidden: true,
-				component: () => import('@/views/goodsManage/catManage/parameterList/index'),
-				meta: { title: '参数列表', activeMenu: '/goodsManage/catManage' },
-			},
-			{
-				path: 'serviceManage',
-				component: () => import('@/views/goodsManage/afterService/index'),
-				meta: { title: '商品规则', icon: 'service' },
-			},
-			// {
-			// 	path: 'freightRules',
-			// 	component: () => import('@/views/goodsManage/freightRules/index'),
-			// 	meta: { title: '运费规则' },
-			// },
-		],
-	},
-	// 用户管理
-	{
-		path: '/user',
-		component: Layout,
-		// redirect: 'userList',
-		name: '用户管理',
-		meta: { title: '', icon: 'setting' },
-		children: [
-			{
-				path: 'userList',
-				name: '用户列表',
-				component: () => import('@/views/user/userList/index'),
-				meta: { title: '用户管理', icon: 'user' },
-			},
-			{
-				path: 'userDetail',
-				name: '用户详情',
-				component: () => import('@/views/user/userDetail/index'),
-				hidden: true,
-				activeMenu: '/user/userList',
-				meta: { title: '用户详情', icon: 'setting' },
-			},
-		],
-	},
-	// 订单管理
-	{
-		path: '/order',
-		component: Layout,
-		redirect: 'orderList',
-		name: '订单管理',
-		meta: { title: '', icon: 'order' },
-		children: [
-			{
-				path: 'orderList',
-				name: '订单列表',
-				component: () => import('@/views/order/orderList/index'),
-				meta: { title: '订单管理' },
-			},
-			{
-				path: 'detail',
-				name: '订单详情',
-				hidden: true,
-				component: () => import('@/views/order/orderList/detail/detail'),
-				meta: {
-					title: '订单详情',
-					icon: '',
-					activeMenu: '/order/orderList',
-				},
-			},
-			{
-				path: 'waitDetail',
-				name: '订单详情',
-				hidden: true,
-				component: () => import('@/views/order/orderList/detail/waitDetail'),
-				meta: {
-					title: '订单详情',
-					icon: '',
-					activeMenu: '/order/orderList',
-				},
-			},
-		],
-	},
-	// 运营管理
-	{
-		path: '/operation',
-		component: Layout,
-		redirect: 'noRedirect',
-		name: '运营管理',
-		meta: { title: '运营管理', icon: 'operation' },
-		children: [
-			{
-				path: 'bannerList',
-				name: 'banner推广',
-				component: () => import('@/views/operation/banner/index'),
-				meta: { title: 'banner推广', icon: 'banner' },
-			},
-			{
-				path: 'commentManagement',
-				name: '评论管理',
-				component: () => import('@/views/operation/comment/index'),
-				meta: { title: '评论管理', icon: 'comment' },
-			},
-			{
-				path: 'addComment',
-				name: '添加评论',
-				hidden: true,
-				component: () => import('@/views/operation/comment/addComment'),
-				meta: { title: '添加评论', icon: 'comment' },
-			},
-			{
-				path: 'goodsRecommend',
-				name: '商品推荐',
-				component: () => import('@/views/operation/recommends/index'),
-				meta: { title: '商品推荐', icon: 'recommends' },
-			},
-		],
-	},
-	// 营销管理
-	{
-		path: '/marketManage',
-		component: Layout,
-		name: '营销管理',
-		redirect: '/marketManage/activity',
-		meta: { title: '营销管理', icon: 'market' },
-		children: [
-			{
-				path: 'activity',
-				name: 'activity',
-				component: () => import('@/views/marketManage/activity/index.vue'),
-				meta: { title: '限时抢购', icon: 'activity' },
-			},
-			{
-				path: 'addActivity',
-				name: 'addActivity',
-				// hidden: true,
-				component: () => import('@/views/marketManage/activity/addActivity/index.vue'),
-				// meta: { title: '' },
-			},
-			{
-				path: 'activityDetail',
-				name: 'activityDetail',
-				hidden: true,
-				component: () => import('@/views/marketManage/activity/activityDetail/index.vue'),
-				meta: { title: '活动明细' },
-			},
-			{
-				path: 'couponManage',
-				name: 'couponManage',
-				component: () => import('@/views/marketManage/couponManage/index.vue'),
-				meta: { title: '优惠券管理', icon: 'coupon' },
-			},
-			{
-				path: 'addCoupon',
-				name: 'addCoupon',
-				hidden: true,
-				component: () => import('@/views/marketManage/couponManage/addCoupon/index.vue'),
-				meta: { title: '' },
-			},
-			{
-				path: 'couponDetail',
-				name: 'couponDetail',
-				hidden: true,
-				component: () => import('@/views/marketManage/couponManage/couponDetail/index.vue'),
-				meta: { title: '优惠券明细' },
-			},
-		],
-	},
-	// 售后管理
-	{
-		path: '/afterSalesManagement',
-		component: Layout,
-		redirect: '/afterSalesManagement/refundList',
-		name: '售后管理',
-		meta: { title: '售后管理', icon: 'afterSales' },
-		children: [
-			{
-				path: 'refundList',
-				name: 'refundList',
-				component: () => import('@/views/afterSalesManagement/refundList/index'),
-				meta: { title: '售后申请', icon: 'form' },
-			},
-			{
-				path: 'refundPage',
-				name: 'refundPage',
-				hidden: true,
-				component: () => import('@/views/afterSalesManagement/refundList/refundPage/index'),
-				meta: { title: '售后操作' },
-			},
-			{
-				path: 'refundDetail',
-				name: 'refundDetail',
-				hidden: true,
-				component: () =>
-					import('@/views/afterSalesManagement/refundList/refundDetail/index'),
-				meta: { title: '售后详情' },
-			},
-			{
-				path: 'refundSause',
-				name: 'refundSause',
-				// hidden: true,
-				component: () => import('@/views/afterSalesManagement/refundSause/index'),
-				meta: { title: '售后原因', icon: 'form' },
-			},
-			{
-				path: 'feedback',
-				name: '意见反馈',
-				component: () => import('@/views/afterSalesManagement/feedback/index'),
-				meta: { title: '意见反馈', icon: 'feedback' },
-			},
-		],
-	},
-	// 系统配置
-	{
-		path: '/system',
-		component: Layout,
-		redirect: '/system/admin',
-		name: '系统配置',
-		meta: { title: '系统配置', icon: 'setting' },
-		children: [
-			{
-				path: 'admin',
-				name: '账号管理',
-				component: () => import('@/views/Admin'),
-				meta: { title: '账号管理', icon: 'admin' },
-			},
-		],
-	},
 	// 404 page must be placed at the end !!!
 	{ path: '*', redirect: '/404', hidden: true },
 ]
@@ -347,6 +76,27 @@ const createRouter = () =>
 
 const router = createRouter()
 
+// router.beforeEach(async (to, from, next) => {
+// 	// start progress bar
+// 	// NProgress.start()
+
+// 	// set page title
+// 	document.title = getPageTitle(to.meta.title)
+
+// 	// determine whether the user has logged in
+// 	const hasToken = getToken()
+// 	//  判断是否有token
+// 	if (hasToken) {
+// 		// 如果有token，直接进入登录界面强制调整到首页
+// 		if (to.path === '/login') {
+// 			// if is logged in, redirect to the home page
+// 			next({ path: '/' })
+// 		}
+// 	} else {
+// 		/* 没有 token 的值 */
+// 		next(`/login?redirect=${to.path}`)
+// 	}
+// })
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
 	const newRouter = createRouter()
