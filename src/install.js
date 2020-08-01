@@ -1,8 +1,8 @@
 /*
  * @Author: wei.chen
  * @Date: 2020-07-31 12:45:27
- * @LastEditors: wei.chen
- * @LastEditTime: 2020-07-31 12:51:09
+ * @LastEditors: hao.tian
+ * @LastEditTime: 2020-08-01 17:58:37
  * @Descripttion: 这个文件是用来安装其它第三方组件配置
  */
 import Vue from 'vue'
@@ -30,4 +30,4 @@ Vue.use(ElementUI)
 Vue.use(VueCropper)
 
 //  icon 配置导入
-import '@/icons' // icon
+import '@/components/SvgIcon/index' // icon
