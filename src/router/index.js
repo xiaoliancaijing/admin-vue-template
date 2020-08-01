@@ -77,22 +77,6 @@ export const constantRoutes = [
 		],
 	},
 
-	// 系统配置
-	// {
-	// 	path: '/system',
-	// 	component: Layout,
-	// 	redirect: '/system/admin',
-	// 	name: '系统配置',
-	// 	meta: { title: '系统配置', icon: 'setting' },
-	// 	children: [
-	// 		{
-	// 			path: 'admin',
-	// 			name: '账号管理',
-	// 			component: () => import('@/views/Admin'),
-	// 			meta: { title: '账号管理', icon: 'admin' },
-	// 		},
-	// 	],
-	// },
 	// 404 page must be placed at the end !!!
 	{ path: '*', redirect: '/404', hidden: true },
 ]
