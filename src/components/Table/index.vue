@@ -16,13 +16,8 @@
 			@select="handleSelect"
 			@select-all="allSelect"
 		>
-			<el-table-column
-				v-if="select"
-				type="selection"
-				width="55"
-				:reserve-selection="true"
-			></el-table-column>
-			<template v-for="item in column">
+			<el-table-column v-if="select" type="selection" width="55"></el-table-column>
+			<template v-for="item in column.column">
 				<el-table-column
 					:prop="item.prop ? item.prop : null"
 					:label="item.label ? item.label : null"
@@ -78,23 +73,33 @@
 </template>
 
 <script>
+import request from '@/utils/request'
 /**
  * @name:
  * @description: 表格二次封装
  * loadData       fun     一级数据接口函数  二级数据所需id默认会在此获取
  * childrenData   fun     二级数据接口函数  添加此函数默认开启数形结构 并且所有一级数据都会带上childen属性
  * params  obj 初始化的时候需要带的参数
- * column    array   表头数据   ==>
+ * column    obj   表头数据   ==>
+ *   如果传入了二次封装数据就不组件发起请求数据
  *   表头参数如下：{
+ * 	   column:array => {
  *     props: string 表头key值
  *     label:string 表头名字
  *     width: number 表头该列的宽度
  *     formatter: fun 自定义格式 Function(row, column, cellValue, index)  row:整条数据实例  column:表头实例  cellValue:该条参数值  index:index
- *     actives: array  操作   {method 事件函数  name 操作名称 }  
- *            ==>method：val=>{} val为返回的该行的值  
+ *     actives: array  操作   {method 事件函数  name 操作名称 }
+ *            ==>method：val=>{} val为返回的该行的值
  *            ==>name:string /function  当传入为回调函数时 回调参数返回为该行的值 当返回为false时 该操作按钮默认不显示
+ * 		}
+ * render    boolean  是否需要自定义插槽 父组件插槽：    v-slot:prop值="{scope}" scope为该行值
+ * 	   request 请求方式 obj => {
+ * 			url:'xx',
+ * 			method:'get',
+ * 			data
+ * 		}
+ * 	   data:array=> 二次封装表格数据
  *   }
- * render    boolean  是否需要自定义插槽 父组件插槽：    v-slot:prop值="{scope}" scope为该行值 
  * eg:
  * <template v-slot:avatar="{scope}">
         <img :src="scope.avatar" class="admin_avater" />
@@ -103,7 +108,7 @@
  * select    function 开启多选框  传递函数 返回value  绑定函数需要在method中声明  value为选中数组 single为true 多选变成单选
  * hidden    boolean  是否显示分页器 不传则默认显示
  * single    boolean  是否开启单选
- * 
+ *
  * ==================
  * 方法 通过this.$refs.表格名.方法名  调用  eg:this.$refs.table.update({...searchParams}) //搜索并更新表格 searchParams为搜索参数对象
  * reset重置表格  update更新表格  clearSelect清空单选/多选
@@ -123,13 +128,14 @@ export default {
 	props: {
 		loadData: {
 			type: Function,
-			required: true,
+			// required: true,
 		},
 		childrenData: {
 			type: Function,
 		},
+		// demo:
 		column: {
-			type: Array,
+			type: Object,
 		},
 		hidden: {
 			type: Boolean,
@@ -144,6 +150,14 @@ export default {
 		single: {
 			type: Boolean,
 			default: false,
+		},
+		parData: {
+			//传入参数
+			type: Object,
+		},
+		callbackData: {
+			//返回请求数据
+			type: Function,
 		},
 	},
 	data() {
@@ -162,31 +176,45 @@ export default {
 		}
 	},
 	created() {
+		var obj = JSON.stringify(this.parData) == '{}'
+		// 合并参数
+		this.listQuery = { ...this.parData, ...this.listQuery }
 		this.getData({ ...this.params, ...this.listQuery })
 	},
 	mounted() {},
 	methods: {
-		getData(params) {
-			this.loadData({ ...params }).then(
-				res => {
-					if (res.success) {
-						let list = []
-						if (this.childrenData) {
-							list = res.data.list.map(item => {
-								item.hasChildren = true
-								return item
-							})
+		getData(data) {
+			if (this.column.data.list && this.column.data.list.length) {
+				this.total = this.column.data.totalElements
+				this.tableData = this.column.data.list
+			} else {
+				if (this.column.request.url && this.column.request.method) {
+					request({
+						url: this.column.request.url,
+						method: this.column.request.method,
+						data: { ...this.column.request.data, ...data },
+					}).then(res => {
+						if (res.code === 200) {
+							if (this.callbackData) {
+								this.callbackData(res)
+							}
+							let list = []
+							if (this.childrenData) {
+								list = res.data.list.map(item => {
+									item.hasChildren = true
+									return item
+								})
+							} else {
+								list = res.data.list
+							}
+							this.total = res.data.totalElements
+							this.tableData = res.data.list
 						} else {
-							list = res.data.list
+							this.$message.error(res.msg)
 						}
-						this.total = res.data.totalElements
-						this.tableData = res.data.list
-					}
-				},
-				err => {
-					console.log(err)
+					})
 				}
-			)
+			}
 		},
 		// 修改每页展示条数
 		handleSizeChange(val) {
@@ -194,17 +222,14 @@ export default {
 				pageIndex: this.listQuery.pageIndex,
 				pageSize: val,
 				...this.searchParams,
-				...this.params,
 			})
 		},
 		// 页数
 		handleCurrentChange(val) {
-			console.log(val)
 			this.getData({
 				pageIndex: val,
 				pageSize: this.listQuery.pageSize,
 				...this.searchParams,
-				...this.params,
 			})
 		},
 		// 通过this.$refs.表格名  调用的方法==============
@@ -215,7 +240,7 @@ export default {
 		// 更新表格
 		update(params) {
 			this.searchParams = params
-			this.getData({ ...this.listQuery, ...this.params, ...params })
+			this.getData({ ...params, ...this.listQuery, ...this.params })
 		},
 		// 清空选项
 		clearSelect() {
@@ -272,17 +297,4 @@ export default {
 .single thead tr .el-checkbox__input {
 	display: none;
 }
-// .el-table .cell.el-tooltip {
-// 	white-space: pre-wrap;
-// 	overflow: hidden;
-// 	text-overflow: ellipsis;
-// 	display: -webkit-box;
-// 	-webkit-line-clamp: 2;
-// 	line-clamp: 2;
-// 	-webkit-box-orient: vertical;
-// }
-// .el-tooltip__popper {
-// 	max-width: 500px;
-// 	// left: 230px;
-// }
 </style>
