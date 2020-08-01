@@ -63,6 +63,19 @@ export const constantRoutes = [
 			},
 		],
 	},
+	{
+		path: '/test',
+		component: Layout,
+		redirect: '/dashboard',
+		children: [
+			{
+				path: 'dashboard',
+				name: '测试表格',
+				component: () => import('@/views/form/index'),
+				meta: { title: '测试表格', icon: 'dashboard' },
+			},
+		],
+	},
 
 	// 系统配置
 	// {
