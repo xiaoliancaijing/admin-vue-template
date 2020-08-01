@@ -1,8 +1,8 @@
 /*
  * @Author: tianhao
  * @Date: 2020-06-11 12:42:56
- * @LastEditors: wei.chen
- * @LastEditTime: 2020-07-31 12:49:58
+ * @LastEditors: hao.tian
+ * @LastEditTime: 2020-08-01 16:17:20
  * @Descripttion:
  */
 
@@ -13,7 +13,9 @@ import './install'
 import App from './App'
 import store from './store'
 import router from './router'
+import imgPreview from '@/components/previewImg/index'
 
+Vue.use(imgPreview)
 Vue.config.productionTip = false
 
 new Vue({

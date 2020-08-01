@@ -74,6 +74,18 @@ export const constantRoutes = [
 				component: () => import('@/views/form/index'),
 				meta: { title: '测试表格', icon: 'dashboard' },
 			},
+			{
+				path: 'tree',
+				name: 'tree',
+				component: () => import('@/views/tree/index'),
+				meta: { title: 'tree', icon: 'dashboard' },
+			},
+			{
+				path: 'picture',
+				name: 'picture',
+				component: () => import('@/views/picture/index'),
+				meta: { title: 'picture', icon: 'dashboard' },
+			},
 		],
 	},
 
