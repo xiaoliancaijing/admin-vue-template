@@ -31,7 +31,7 @@ export default {
 	},
 	data() {
 		return {
-			title: '享得多后台管理系统',
+			title: '后台管理系统',
 			logo: 'http://cdn.xiang360.com/xiangdeduo_logo_temp.png',
 		}
 	},
