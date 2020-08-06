@@ -184,16 +184,16 @@ export default {
 	mounted() {},
 	methods: {
 		getData(data) {
-			if (this.column.data.list && this.column.data.list.length) {
-				this.total = this.column.data.totalElements
-				this.tableData = this.column.data.list
-			} else {
+			console.log('======>>this.column', this.column)
+
+			if (!this.column.data) {
 				if (this.column.request.url && this.column.request.method) {
 					request({
 						url: this.column.request.url,
 						method: this.column.request.method,
 						data: { ...this.column.request.data, ...data },
 					}).then(res => {
+						console.log('======>>res', res)
 						if (res.code === 200) {
 							if (this.callbackData) {
 								this.callbackData(res)
@@ -214,6 +214,9 @@ export default {
 						}
 					})
 				}
+			} else {
+				this.total = this.column.data.totalElements
+				this.tableData = this.column.data.list
 			}
 		},
 		// 修改每页展示条数
