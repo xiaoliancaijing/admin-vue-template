@@ -1,8 +1,8 @@
 /*
  * @Author: wei.chen
  * @Date: 2020-06-12 18:39:19
- * @LastEditors: wei.chen
- * @LastEditTime: 2020-07-31 11:51:04
+ * @LastEditors: peng.wan
+ * @LastEditTime: 2020-08-03 12:36:58
  * @Descripttion:
  */
 export const url = {

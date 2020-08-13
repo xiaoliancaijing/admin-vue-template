@@ -1,8 +1,8 @@
 <!--
  * @Author: wei.chen
  * @Date: 2020-06-19 11:37:13
- * @LastEditors: wei.chen
- * @LastEditTime: 2020-07-06 11:57:12
+ * @LastEditors: peng.wan
+ * @LastEditTime: 2020-08-05 10:20:00
  * @Descripttion: 
 -->
 
@@ -288,9 +288,11 @@ export default {
 		handleImgChange(e) {
 			var reader = new FileReader()
 			let inputDOM = this.$refs.inputer
-
+			console.log(e)
+			console.log(reader)
 			reader.onload = e => {
 				// 把Array Buffer转化为blob 如果是base64不需要
+				console.log(e)
 				if (typeof e.target.result === 'object') {
 					this.option.cropperImgObj = window.URL.createObjectURL(
 						new Blob([e.target.result])

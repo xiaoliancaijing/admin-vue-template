@@ -67,6 +67,7 @@ export const constantRoutes = [
 		path: '/test',
 		component: Layout,
 		redirect: '/dashboard',
+		meta: { title: '测试管理' },
 		children: [
 			{
 				path: 'dashboard',
@@ -85,6 +86,12 @@ export const constantRoutes = [
 				name: 'picture',
 				component: () => import('@/views/picture/index'),
 				meta: { title: 'picture', icon: 'dashboard' },
+			},
+			{
+				path: 'upload',
+				name: 'upload',
+				component: () => import('@/views/upload/index'),
+				meta: { title: 'upload上传', icon: 'dashboard' },
 			},
 		],
 	},

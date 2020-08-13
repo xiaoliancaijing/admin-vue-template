@@ -35,6 +35,7 @@ const actions = {
 			login({ phone, passWord })
 				.then(response => {
 					const { data } = response
+					console.log(data)
 					commit('SET_TOKEN', data.token)
 					commit('SET_NAME', data.admin.name)
 					commit('SET_AVATAR', data.admin.avatar)
