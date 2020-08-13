@@ -41,6 +41,7 @@ const actions = {
 					commit('SET_AVATAR', data.admin.avatar)
 					setToken(data.token)
 					sessionStorage.setItem('token', data.token)
+					sessionStorage.setItem('role_router', JSON.stringify(data.permissionCodeSet))
 					resolve()
 				})
 				.catch(error => {
