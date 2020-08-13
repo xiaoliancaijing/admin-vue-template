@@ -46,7 +46,6 @@ export default {
 				console.log('获取upload token 8 分钟')
 				getToken().then(res => {
 					if (res.code === 200) {
-						sessionStorage.setItem('qiniuToken', res.data.uptoken)
 						store.dispatch('app/setUpLoadToken', res.data.uptoken)
 					} else {
 						message.error(res.msg)

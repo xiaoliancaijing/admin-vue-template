@@ -1,13 +1,18 @@
+/*
+ * @Author: peng.wan
+ * @Date: 2020-07-27 15:03:42
+ * @LastEditors: peng.wan
+ * @LastEditTime: 2020-07-27 16:04:49
+ * @Descripttion:
+ */
+
 import Vue from 'vue'
 import Router from 'vue-router'
-import { getToken } from '@/utils/auth'
-import { getPageTitle } from '@/utils/getPageTitle'
-
+import getRouterList from '@/router/router'
 Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -38,6 +43,7 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
+// 公共路由不参与权限
 export const constantRoutes = [
 	{
 		path: '/login',
@@ -63,65 +69,27 @@ export const constantRoutes = [
 			},
 		],
 	},
-	{
-		path: '/test',
-		component: Layout,
-		redirect: '/dashboard',
-		children: [
-			{
-				path: 'dashboard',
-				name: '测试表格',
-				component: () => import('@/views/form/index'),
-				meta: { title: '测试表格', icon: 'dashboard' },
-			},
-			{
-				path: 'tree',
-				name: 'tree',
-				component: () => import('@/views/tree/index'),
-				meta: { title: 'tree', icon: 'dashboard' },
-			},
-			{
-				path: 'picture',
-				name: 'picture',
-				component: () => import('@/views/picture/index'),
-				meta: { title: 'picture', icon: 'dashboard' },
-			},
-		],
-	},
 
 	// 404 page must be placed at the end !!!
 	{ path: '*', redirect: '/404', hidden: true },
 ]
+let newsRouter = []
+
+if (getRouterList()) {
+	newsRouter = constantRoutes.concat(getRouterList())
+} else {
+	newsRouter = constantRoutes
+}
+
 const createRouter = () =>
 	new Router({
 		// mode: 'history', // require service support
 		scrollBehavior: () => ({ y: 0 }),
-		routes: constantRoutes,
+		routes: newsRouter,
 	})
 
 const router = createRouter()
 
-// router.beforeEach(async (to, from, next) => {
-// 	// start progress bar
-// 	// NProgress.start()
-
-// 	// set page title
-// 	document.title = getPageTitle(to.meta.title)
-
-// 	// determine whether the user has logged in
-// 	const hasToken = getToken()
-// 	//  判断是否有token
-// 	if (hasToken) {
-// 		// 如果有token，直接进入登录界面强制调整到首页
-// 		if (to.path === '/login') {
-// 			// if is logged in, redirect to the home page
-// 			next({ path: '/' })
-// 		}
-// 	} else {
-// 		/* 没有 token 的值 */
-// 		next(`/login?redirect=${to.path}`)
-// 	}
-// })
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
 	const newRouter = createRouter()

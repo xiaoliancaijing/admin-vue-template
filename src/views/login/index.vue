@@ -127,7 +127,6 @@ export default {
 							// 登录后第一次
 							getToken().then(res => {
 								if (res.code === 200) {
-									sessionStorage.setItem('qiniuToken', res.data.uptoken)
 									store.dispatch('app/setUpLoadToken', res.data.uptoken)
 								} else {
 									message.error(res.msg)
