@@ -7,17 +7,17 @@
  */
 import request from '@/utils/request'
 export const getList = data => {
-        return {
-            url: '/adminApi/banner',
-            method: 'get',
-            data,
-        }
-    }
-    // 用户状态管理
+	return {
+		url: '/adminApi/banner',
+		method: 'get',
+		data,
+	}
+}
+// 用户状态管理
 export function banState(data) {
-    return request({
-        url: `/adminApi/users/${data.userId}/banOrEnable`,
-        method: 'put',
-        data,
-    })
+	return request({
+		url: `/adminApi/users/${data.userId}/banOrEnable`,
+		method: 'put',
+		data,
+	})
 }

@@ -1,5 +1,12 @@
+/*
+ * @Author: wei.chen
+ * @Date: 2020-08-03 18:15:55
+ * @LastEditors: wei.chen
+ * @LastEditTime: 2020-08-04 14:35:40
+ * @Descripttion:
+ */
 import Vue from 'vue'
-import SvgIcon from '@/components/SvgIcon'// svg component
+import SvgIcon from '@/components/SvgIcon/index.vue' // svg component
 
 // register globally
 Vue.component('svg-icon', SvgIcon)

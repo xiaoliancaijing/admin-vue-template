@@ -69,38 +69,6 @@ export const constantRoutes = [
 			},
 		],
 	},
-	{
-		path: '/test',
-		component: Layout,
-		redirect: '/dashboard',
-		meta: { title: '测试管理' },
-		children: [
-			{
-				path: 'dashboard',
-				name: '测试表格',
-				component: () => import('@/views/form/index'),
-				meta: { title: '测试表格', icon: 'dashboard' },
-			},
-			{
-				path: 'tree',
-				name: 'tree',
-				component: () => import('@/views/tree/index'),
-				meta: { title: 'tree', icon: 'dashboard' },
-			},
-			{
-				path: 'picture',
-				name: 'picture',
-				component: () => import('@/views/picture/index'),
-				meta: { title: 'picture', icon: 'dashboard' },
-			},
-			{
-				path: 'upload',
-				name: 'upload',
-				component: () => import('@/views/upload/index'),
-				meta: { title: 'upload上传', icon: 'dashboard' },
-			},
-		],
-	},
 
 	// 404 page must be placed at the end !!!
 	{ path: '*', redirect: '/404', hidden: true },

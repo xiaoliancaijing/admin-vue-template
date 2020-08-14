@@ -66,6 +66,7 @@
 import { isPhone } from '@/utils/validate'
 import { getToken } from '@/api/upload'
 import store from '@/store'
+import getRouterList from '@/router/router'
 
 export default {
 	name: 'Login',
@@ -132,6 +133,14 @@ export default {
 									message.error(res.msg)
 								}
 							})
+
+							let _tempRouter = getRouterList()
+							this.$router.options.routes = [
+								...this.$router.options.routes,
+								..._tempRouter,
+							]
+							this.$router.addRoutes(_tempRouter)
+
 							this.$router.push({ path: this.redirect || '/' })
 							this.loading = false
 						})
@@ -144,6 +153,12 @@ export default {
 				}
 			})
 		},
+	},
+	created() {
+		if (sessionStorage.getItem('role_router')) {
+			location.reload()
+			sessionStorage.removeItem('role_router')
+		}
 	},
 }
 </script>
