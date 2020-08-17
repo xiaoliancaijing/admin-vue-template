@@ -50,20 +50,6 @@
 				</span>
 			</el-form-item>
 
-			<el-form-item prop="value">
-				<!-- <span class="svg-container">
-					<svg-icon icon-class="user" />
-				</span> -->
-				<el-select v-model="value" placeholder="请选择">
-					<el-option
-						v-for="item in options"
-						:key="item.value"
-						:label="item.label"
-						:value="item.value"
-					></el-option>
-				</el-select>
-			</el-form-item>
-
 			<div class="login_two">
 				<router-link :to="{ name: 'register' }">注册账号</router-link>
 				<router-link :to="{ name: 'forget' }">忘记密码</router-link>

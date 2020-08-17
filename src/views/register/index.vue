@@ -33,7 +33,7 @@
 				</el-input>
 			</el-form-item>
 			<el-form-item prop="code">
-				<el-input placeholder="请输入验证码" v-model="code">
+				<el-input placeholder="请输入验证码" v-model="loginForm.code">
 					<template slot="append">获取验证码</template>
 				</el-input>
 			</el-form-item>
@@ -109,6 +109,7 @@ export default {
 			// if (value.length < 6) {
 			//   callback(new Error('The password can not be less than 6 digits'))
 			// } else {
+
 			callback()
 			// }
 		}
@@ -116,10 +117,14 @@ export default {
 			loginForm: {
 				phone: '',
 				passWord: '',
+				againpassWord: '',
+				code: '',
 			},
 			loginRules: {
 				phone: [{ required: true, trigger: 'blur', validator: validateUsername }],
 				passWord: [{ required: true, trigger: 'blur', validator: validatePassword }],
+				code: [{ required: true, trigger: 'blur' }],
+				againpassWord: [{ required: true, trigger: 'blur', validator: validatePassword }],
 			},
 			loading: false,
 			passwordType: 'passWord',
