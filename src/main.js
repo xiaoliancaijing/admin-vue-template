@@ -13,7 +13,7 @@ import './install'
 import App from './App'
 import store from './store'
 import router from './router'
-import imgPreview from '@/components/previewImg/index'
+import imgPreview from '@/components/previewImg'
 
 Vue.use(imgPreview)
 Vue.config.productionTip = false

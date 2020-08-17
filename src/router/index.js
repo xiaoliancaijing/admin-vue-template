@@ -47,13 +47,26 @@ import Layout from '@/layout'
 export const constantRoutes = [
 	{
 		path: '/login',
-		component: () => import('@/views/login/index'),
+		name: 'login',
+		component: () => import('@/views/login'),
 		hidden: true,
 	},
 
 	{
 		path: '/404',
 		component: () => import('@/views/404'),
+		hidden: true,
+	},
+	{
+		path: '/register',
+		name: 'register',
+		component: () => import('@/views/register'),
+		hidden: true,
+	},
+	{
+		path: '/forget',
+		name: 'forget',
+		component: () => import('@/views/forget'),
 		hidden: true,
 	},
 	{
@@ -64,7 +77,7 @@ export const constantRoutes = [
 			{
 				path: 'dashboard',
 				name: '首页',
-				component: () => import('@/views/dashboard/index'),
+				component: () => import('@/views/dashboard'),
 				meta: { title: '首页', icon: 'dashboard' },
 			},
 		],

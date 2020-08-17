@@ -30,4 +30,4 @@ Vue.use(ElementUI)
 Vue.use(VueCropper)
 
 //  icon 配置导入
-import '@/components/SvgIcon/index' // icon
+import '@/components/SvgIcon' // icon

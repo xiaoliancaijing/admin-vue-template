@@ -27,23 +27,24 @@ let constantRoutes2 = [
 			},
 		],
 	},
+
 	{
 		path: '/test',
 		component: Layout,
 		redirect: '/dashboard',
-		meta: { title: '测试', icon: 'dashboard', code: '001001' },
+		meta: { title: '测试', icon: 'dashboard', code: 'null' },
 		children: [
 			{
 				path: 'dashboard',
 				name: '测试表格',
 				component: () => import('@/views/form/index'),
-				meta: { title: '测试表格', icon: 'dashboard', code: '001002' },
+				meta: { title: '测试表格', icon: 'dashboard', code: 'null' },
 			},
 			{
 				path: 'tree',
 				name: 'tree',
 				component: () => import('@/views/tree/index'),
-				meta: { title: 'tree', icon: 'dashboard', code: '0007' },
+				meta: { title: 'tree', icon: 'dashboard', code: 'null' },
 			},
 			{
 				path: 'picture',

@@ -1,5 +1,5 @@
 <template>
-	<div class="login-container">
+	<div class="forget-container">
 		<el-form
 			ref="loginForm"
 			:model="loginForm"
@@ -13,9 +13,10 @@
 			</div>
 
 			<el-form-item prop="phone">
-				<span class="svg-container">
+				<!-- <span class="svg-container">
 					<svg-icon icon-class="user" />
-				</span>
+				</span> -->
+
 				<el-input
 					ref="phone"
 					v-model.trim="loginForm.phone"
@@ -26,56 +27,27 @@
 					auto-complete="on"
 					maxlength="11"
 					size="small"
-				/>
+					class="phone_zc"
+				>
+					<template slot="prepend">+86</template>
+				</el-input>
 			</el-form-item>
-
-			<el-form-item prop="passWord">
-				<span class="svg-container">
-					<svg-icon icon-class="password" />
-				</span>
-				<el-input
-					:key="passwordType"
-					ref="passWord"
-					v-model.trim="loginForm.passWord"
-					:type="passwordType"
-					placeholder="密码"
-					name="passWord"
-					tabindex="2"
-					auto-complete="on"
-					@keyup.enter.native="handleLogin"
-					size="small"
-				/>
-				<span class="show-pwd" @click="showPwd">
-					<svg-icon :icon-class="passwordType === 'passWord' ? 'eye' : 'eye-open'" />
-				</span>
-			</el-form-item>
-
-			<el-form-item prop="value">
-				<!-- <span class="svg-container">
-					<svg-icon icon-class="user" />
-				</span> -->
-				<el-select v-model="value" placeholder="请选择">
-					<el-option
-						v-for="item in options"
-						:key="item.value"
-						:label="item.label"
-						:value="item.value"
-					></el-option>
-				</el-select>
+			<el-form-item prop="code">
+				<el-input placeholder="请输入验证码" v-model="code">
+					<template slot="append">获取验证码</template>
+				</el-input>
 			</el-form-item>
 
 			<div class="login_two">
-				<router-link :to="{ name: 'register' }">注册账号</router-link>
-				<router-link :to="{ name: 'forget' }">忘记密码</router-link>
+				<el-button
+					:loading="loading"
+					type="primary"
+					style="width:448px;margin-bottom:30px;"
+					@click.native.prevent="handleLogin"
+				>
+					确定
+				</el-button>
 			</div>
-			<el-button
-				:loading="loading"
-				type="primary"
-				style="width:448px;margin-bottom:30px;"
-				@click.native.prevent="handleLogin"
-			>
-				登录
-			</el-button>
 		</el-form>
 	</div>
 </template>
@@ -87,7 +59,7 @@ import store from '@/store'
 import getRouterList from '@/router/router'
 
 export default {
-	name: 'Login',
+	name: 'Forget',
 	data() {
 		const validateUsername = (rule, value, callback) => {
 			if (!isPhone(value)) {
@@ -116,6 +88,7 @@ export default {
 			passwordType: 'passWord',
 			redirect: undefined,
 			value: '',
+			code: '',
 			options: [
 				{
 					value: '选项1',
@@ -204,11 +177,25 @@ export default {
 }
 </script>
 <style>
-.login-container .el-input__suffix {
+.forget-container .el-input__suffix {
 	position: absolute;
 	right: 0;
 	display: block;
 	right: -112px;
+}
+.forget-container .el-input-group__prepend {
+	padding: 12px 20px;
+}
+.forget-container .phone_zc input {
+	padding-top: 8px;
+}
+.forget-container .el-input-group__append {
+	position: absolute;
+	right: -118px;
+	top: 0px;
+	width: 100px;
+	height: 40px;
+	line-height: 40px;
 }
 </style>
 
@@ -221,15 +208,14 @@ $light_gray: #fff;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-	.login-container .el-input input {
+	.forget-container .el-input input {
 		color: $cursor;
 	}
 }
 
 /* reset element-ui css */
-.login-container {
+.forget-container {
 	.el-input {
-		display: inline-block;
 		// height: 47px;
 		width: 330px;
 
@@ -264,19 +250,17 @@ $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
-.login-container {
+.forget-container {
 	min-height: 100%;
 	width: 100%;
 	background-color: $bg;
 	overflow: hidden;
 	.login_two {
-		margin-bottom: 20px;
 		color: #fff;
 		font-size: 14px;
 		display: flex;
 		justify-content: space-between;
-		a {
-		}
+		align-items: baseline;
 	}
 	.login-form {
 		position: relative;
