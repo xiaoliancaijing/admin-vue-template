@@ -1,3 +1,10 @@
+/*
+ * @Author: tangrenjie
+ * @Date: 2020-09-03 10:31:50
+ * @LastEditors: tangrenjie
+ * @LastEditTime: 2020-09-03 13:50:18
+ * @Descripttion: 
+ */
 //获取动态路由方法
 import Layout from '@/layout'
 
@@ -25,6 +32,7 @@ let constantRoutes2 = [
 				component: () => import('@/views/dashboard/index'),
 				meta: { title: '首页', icon: 'dashboard' },
 			},
+
 		],
 	},
 
@@ -52,6 +60,12 @@ let constantRoutes2 = [
 				component: () => import('@/views/picture/index'),
 				meta: { title: 'picture', icon: 'dashboard', code: 'null' },
 			},
+			{
+				path: 'scene',
+				name: 'scene',
+				component: () => import('@/views/sceneCascader'),
+				meta: { title: '测试表场景组件', icon: 'dashboard', code: 'null' },
+			},
 		],
 	},
 
@@ -71,7 +85,7 @@ function getRouterList() {
 			(value.meta && value.meta.code && userRouter && userRouter.includes(value.meta.code)) ||
 			(value.meta && userRouter && !value.meta.code)
 		) {
-			value.children.forEach(function(item, i) {
+			value.children.forEach(function (item, i) {
 				// console.log(item.code)
 				if (userRouter.includes(item.meta.code) || !item.meta.code) {
 					child.push(item)

@@ -17,7 +17,9 @@
 export function isExternal(path) {
     return /^(https?:|mailto:|tel:)/.test(path)
 }
-
+export function isPromise(obj) {
+    return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
+}
 /**
  * @name:
  * @description: 手机号码校验
