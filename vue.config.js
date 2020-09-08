@@ -39,11 +39,11 @@ module.exports = {
 		config.plugins.delete('prefetch') // TODO: need test
 
 		// set svg-sprite-loader
-		config.module.rule('svg').exclude.add(resolve('src/components/SvgIcon')).end()
+		config.module.rule('svg').exclude.add(resolve('src/components/Basic/SvgIcon')).end()
 		config.module
 			.rule('icons')
 			.test(/\.svg$/)
-			.include.add(resolve('src/components/SvgIcon'))
+			.include.add(resolve('src/components/Basic/SvgIcon'))
 			.end()
 			.use('svg-sprite-loader')
 			.loader('svg-sprite-loader')
