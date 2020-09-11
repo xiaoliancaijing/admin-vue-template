@@ -2,7 +2,7 @@
  * @Author: tangrenjie
  * @Date: 2020-09-03 10:31:50
  * @LastEditors: tangrenjie
- * @LastEditTime: 2020-09-03 13:50:18
+ * @LastEditTime: 2020-09-11 15:15:05
  * @Descripttion: 
  */
 //获取动态路由方法
@@ -51,7 +51,7 @@ let constantRoutes2 = [
 			{
 				path: 'tree',
 				name: 'tree',
-				component: () => import('@/views/tree/index'),
+				component: () => import('@/views/deptTree/index'),
 				meta: { title: 'tree', icon: 'dashboard', code: 'null' },
 			},
 			{
@@ -64,7 +64,7 @@ let constantRoutes2 = [
 				path: 'scene',
 				name: 'scene',
 				component: () => import('@/views/sceneCascader'),
-				meta: { title: '测试表场景组件', icon: 'dashboard', code: 'null' },
+				meta: { title: '场景组件', icon: 'dashboard', code: 'null' },
 			},
 		],
 	},

@@ -2,7 +2,7 @@
  * @Author: tangrenjie
  * @Date: 2020-09-03 10:51:39
  * @LastEditors: tangrenjie
- * @LastEditTime: 2020-09-03 14:10:16
+ * @LastEditTime: 2020-09-11 11:47:48
  * @Descripttion: 
 -->
 <template>
@@ -12,9 +12,10 @@
         :props="customProps"
         :clearable="clearable"
         @change="changeVal"
-        :value="value"
+        :value="val"
         :show-all-levels="false"
         :size="size"
+        ref="cascader"
     ></el-cascader>
 </template>
 
@@ -27,7 +28,7 @@ export default {
     },
     props: {
         apiSource: {
-            type: Promise | Function, // Api请求,
+            type: Function, // Api请求,
             required: true,
         },
         value: Number | String,
@@ -47,12 +48,26 @@ export default {
         renderProps: {
             type: Object,
             default() {
-                return {};
+                return {
+                    value: "id",
+                    label: "deptName",
+                    checkStrictly: true,
+                    emitPath: false,
+                };
             },
         },
     },
     mounted() {
         this.init();
+    },
+    computed: {
+        val() {
+            if (typeof this.value === "number") {
+                return String(this.value);
+            } else {
+                return this.value;
+            }
+        },
     },
     data() {
         return {
@@ -70,19 +85,17 @@ export default {
                 throw new Error("apiSource必填哟");
                 return;
             }
-            // 兼容自定义的 Function， 用于mock
-            let api = this.apiSource;
-            if (typeof api === "function") {
-                api = Promise.resolve(this.apiSource);
-            }
-            api().then((res) => {
+            this.apiSource().then((res) => {
                 const { data } = res;
+                transfer(data);
+                parseValueToString(data);
                 this.options = data;
             });
         },
         changeVal(val) {
             this.$emit("input", val); // 用于双向绑定，感知不到
             this.$emit("change", val); // 用于其他操作
+            this.$refs.cascader.dropDownVisible = false;
         },
     },
 };
@@ -101,6 +114,14 @@ function transfer(arr) {
         } else {
             delete item.children;
             return;
+        }
+    });
+}
+function parseValueToString(options) {
+    options.forEach((opt) => {
+        opt.id = String(opt.id);
+        if (opt.children && opt.children.length > 0) {
+            parseValueToString(opt.children);
         }
     });
 }
