@@ -191,7 +191,7 @@ export function copyToClip(content, message) {
 
 /**
  *文件下载
- *引入后直接掉用
+ *引入后直接掉用 （此方法可能会引起跨域的问题）
  *传入参数 ulr地址 name文件名
  */
 export const downloadMp3 = (filePath, fileName = 'yuying.wav') => {
