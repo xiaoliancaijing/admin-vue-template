@@ -2,7 +2,7 @@
  * Created by PanJiaChen on 16/11/18.
  */
 
-import chalk from 'chalk'
+import chalk from 'chalk';
 
 /**
  * Parse the time to string
@@ -12,28 +12,28 @@ import chalk from 'chalk'
  */
 export function parseTime(time, cFormat) {
 	if (arguments.length === 0 || !time) {
-		return null
+		return null;
 	}
-	const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
-	let date
+	const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}';
+	let date;
 	if (typeof time === 'object') {
-		date = time
+		date = time;
 	} else {
 		if (typeof time === 'string') {
 			if (/^[0-9]+$/.test(time)) {
 				// support "1548221490638"
-				time = parseInt(time)
+				time = parseInt(time);
 			} else {
 				// support safari
 				// https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-				time = time.replace(new RegExp(/-/gm), '/')
+				time = time.replace(new RegExp(/-/gm), '/');
 			}
 		}
 
 		if (typeof time === 'number' && time.toString().length === 10) {
-			time = time * 1000
+			time = time * 1000;
 		}
-		date = new Date(time)
+		date = new Date(time);
 	}
 	const formatObj = {
 		y: date.getFullYear(),
@@ -43,16 +43,16 @@ export function parseTime(time, cFormat) {
 		i: date.getMinutes(),
 		s: date.getSeconds(),
 		a: date.getDay(),
-	}
+	};
 	const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
-		const value = formatObj[key]
+		const value = formatObj[key];
 		// Note: getDay() returns 0 on Sunday
 		if (key === 'a') {
-			return ['日', '一', '二', '三', '四', '五', '六'][value]
+			return ['日', '一', '二', '三', '四', '五', '六'][value];
 		}
-		return value.toString().padStart(2, '0')
-	})
-	return time_str
+		return value.toString().padStart(2, '0');
+	});
+	return time_str;
 }
 
 /**
@@ -62,27 +62,27 @@ export function parseTime(time, cFormat) {
  */
 export function formatTime(time, option) {
 	if (('' + time).length === 10) {
-		time = parseInt(time) * 1000
+		time = parseInt(time) * 1000;
 	} else {
-		time = +time
+		time = +time;
 	}
-	const d = new Date(time)
-	const now = Date.now()
+	const d = new Date(time);
+	const now = Date.now();
 
-	const diff = (now - d) / 1000
+	const diff = (now - d) / 1000;
 
 	if (diff < 30) {
-		return '刚刚'
+		return '刚刚';
 	} else if (diff < 3600) {
 		// less 1 hour
-		return Math.ceil(diff / 60) + '分钟前'
+		return Math.ceil(diff / 60) + '分钟前';
 	} else if (diff < 3600 * 24) {
-		return Math.ceil(diff / 3600) + '小时前'
+		return Math.ceil(diff / 3600) + '小时前';
 	} else if (diff < 3600 * 24 * 2) {
-		return '1天前'
+		return '1天前';
 	}
 	if (option) {
-		return parseTime(time, option)
+		return parseTime(time, option);
 	} else {
 		return (
 			d.getMonth() +
@@ -94,7 +94,7 @@ export function formatTime(time, option) {
 			'时' +
 			d.getMinutes() +
 			'分'
-		)
+		);
 	}
 }
 
@@ -103,9 +103,9 @@ export function formatTime(time, option) {
  * @returns {Object}
  */
 export function param2Obj(url) {
-	const search = url.split('?')[1]
+	const search = url.split('?')[1];
 	if (!search) {
-		return {}
+		return {};
 	}
 	return JSON.parse(
 		'{"' +
@@ -115,7 +115,7 @@ export function param2Obj(url) {
 				.replace(/=/g, '":"')
 				.replace(/\+/g, ' ') +
 			'"}'
-	)
+	);
 }
 
 /**
@@ -126,45 +126,45 @@ export function param2Obj(url) {
  */
 export function getSku(val) {
 	if (!val) {
-		return false
+		return false;
 	}
-	let properties = []
-	let names = []
-	let sku = []
-	let arr2 = []
-	let obj = {}
-	let handle = []
+	let properties = [];
+	let names = [];
+	let sku = [];
+	let arr2 = [];
+	let obj = {};
+	let handle = [];
 	for (let i = 0; i < val.length; i++) {
-		properties.push(val[i].properties)
+		properties.push(val[i].properties);
 	}
 	for (let i = 0; i < properties.length; i++) {
-		let item = properties[i].split(';')
+		let item = properties[i].split(';');
 
-		let arr1 = []
+		let arr1 = [];
 		for (let j = 0; j < item.length; j++) {
-			let name = item[j].split(':')
-			handle.push(name[0], name[1])
-			arr1.push(name[0])
-			arr2.push(name[1])
-			obj[name[0]] = []
+			let name = item[j].split(':');
+			handle.push(name[0], name[1]);
+			arr1.push(name[0]);
+			arr2.push(name[1]);
+			obj[name[0]] = [];
 			Object.keys(obj).forEach(item => {
 				if (item == name[0]) {
 					// console.log(name[1], obj[item])
-					obj[item].push(name[1])
+					obj[item].push(name[1]);
 				}
-			})
+			});
 		}
 		// 由于拼接时候最后一个会有空，需要删除
-		arr1.splice(arr1.length - 1, 1)
-		arr2.splice(arr2.length - 1, 1)
-		names = arr1
-		sku = Array.from(new Set(arr2))
+		arr1.splice(arr1.length - 1, 1);
+		arr2.splice(arr2.length - 1, 1);
+		names = arr1;
+		sku = Array.from(new Set(arr2));
 	}
 	// 模拟用户操作
 	handle = handle.filter(item => {
-		return item
-	})
-	return { names, sku, handle }
+		return item;
+	});
+	return { names, sku, handle };
 }
 
 /**
@@ -176,15 +176,39 @@ export function getSku(val) {
  */
 
 export function copyToClip(content, message) {
-	var aux = document.createElement('input')
-	aux.setAttribute('value', content)
-	document.body.appendChild(aux)
-	aux.select()
-	document.execCommand('copy')
-	document.body.removeChild(aux)
+	var aux = document.createElement('input');
+	aux.setAttribute('value', content);
+	document.body.appendChild(aux);
+	aux.select();
+	document.execCommand('copy');
+	document.body.removeChild(aux);
 	if (message == null) {
-		confirm('复制成功')
+		confirm('复制成功');
 	} else {
-		confirm(message)
+		confirm(message);
 	}
 }
+
+/**
+ *文件下载
+ *引入后直接掉用
+ *传入参数 ulr地址 name文件名
+ */
+export const downloadMp3 = (filePath, fileName = 'yuying.wav') => {
+	fetch(filePath)
+		.then(res => res.blob())
+		.then(blob => {
+			const a = document.createElement('a');
+			document.body.appendChild(a);
+			a.style.display = 'none';
+			// 使用获取到的blob对象创建的url
+			const url = window.URL.createObjectURL(blob);
+			a.href = url;
+			// 指定下载的文件名
+			a.download = fileName;
+			a.click();
+			document.body.removeChild(a);
+			// 移除blob对象的url
+			window.URL.revokeObjectURL(url);
+		});
+};
